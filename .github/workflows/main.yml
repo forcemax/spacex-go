@@ -14,12 +14,12 @@ jobs:
         java-version: '1.8'
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.9.1+hotfix.6'
-    - run: flutter channel stable
-    - run: flutter upgrade
-    - run: flutter packages get
-    - run: flutter build apk
+        flutter-version: '1.9.1+hotfix.4'
+        channel: 'stable'
+    - name: Upgrade flutter
+      run: |
+        flutter channel master
+        flutter upgrade
     - name: Build apk package
       run: |
-        cd ./android
-        flutter build apk --release
+          flutter build apk --release
