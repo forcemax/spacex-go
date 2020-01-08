@@ -23,7 +23,7 @@ jobs:
     - name: Fill keystore key
       run: |
           pwd
-          echo ${{ secret.SIGNING_KEY }}
+          echo ${{ secrets.SIGNING_KEY }}
     - name: Build apk package
       run: |
           flutter build apk --release
