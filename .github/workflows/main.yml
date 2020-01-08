@@ -22,8 +22,12 @@ jobs:
         flutter upgrade
     - name: Fill keystore key
       run: |
-          pwd
-          echo ${{ secrets.SIGNING_KEY }}
+        CURPWD=$(pwd)
+        echo "${{ secrets.SIGNING_KEY }}" | base64 --decode > keystore.jks
+        echo "storeFile=${CURPWD}/keystore.jks" > android/key.properties
+        echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
+        echo "keyAlias=${{ secrets.ALIAS }}" >> android/key.properties
+        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties  
     - name: Build apk package
       run: |
-          flutter build apk --release
+        flutter build apk --release
