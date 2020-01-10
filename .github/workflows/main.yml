@@ -32,5 +32,8 @@ jobs:
       run: |
         flutter build apk --release
     - name: Test app on apptest.ai
-      run: |
-        curl -X POST -F 'apk_file=@"build/app/outputs/apk/release/app-release.apk"' -F 'data={"pid":1087, "test_set_name":"${{ github.sha }}"}' "https://api.apptest.ai/test_set/queuing?access_key=${{ secrets.APPTESTAI_KEY }}"
+      uses: forcemax/apptestai-test@v1
+      with:
+        accesskey: ${{ secrets.APPTESTAI_KEY }}
+        projectid: 1087
+        packagefile: build/app/outputs/apk/release/app-release.apk
