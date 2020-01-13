@@ -33,7 +33,8 @@ jobs:
         echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties  
     - name: Build apk package
       run: |
-        flutter build apk --release
+        cd android
+        ./gradlew app:assembleRelease
     - name: Test app on apptest.ai
       uses: forcemax/apptestai-test@v1
       with:
