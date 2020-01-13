@@ -20,6 +20,9 @@ jobs:
       run: |
         flutter channel master
         flutter upgrade
+    - name: flutter doctor
+      run: |
+        flutter doctor
     - name: Fill keystore key
       run: |
         CURPWD=$(pwd)
