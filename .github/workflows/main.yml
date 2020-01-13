@@ -22,7 +22,7 @@ jobs:
         flutter upgrade
     - name: flutter doctor
       run: |
-        flutter doctor
+        flutter doctor -v
     - name: Fill keystore key
       run: |
         CURPWD=$(pwd)
