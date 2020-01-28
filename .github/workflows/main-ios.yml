@@ -29,12 +29,12 @@ jobs:
         flutter pub get
     - name: Build development package using fastlane
       env:
-        APPLE_ID=${{ secrets.APPLE_ID }}
-        TEAM_ID=${{ secrets.TEAM_ID }}
-        APP_BUNDLE_ID=${{ secrets.APP_BUNDLE_ID }}
-        MATCH_PASSWORD=${{ secrets.MATCH_PASSWORD }}
-        FASTLANE_CERT_REPO=${{ secrets.FASTLANE_CERT_REPO }}
-        MATCH_GIT_BASIC_AUTHORIZATION=${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        TEAM_ID: ${{ secrets.TEAM_ID }}
+        APP_BUNDLE_ID: ${{ secrets.APP_BUNDLE_ID }}
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        FASTLANE_CERT_REPO: ${{ secrets.FASTLANE_CERT_REPO }}
+        MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
       working-directory: ./ios
       run: |
         fastlane beta
