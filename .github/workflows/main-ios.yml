@@ -35,6 +35,8 @@ jobs:
         MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
         FASTLANE_CERT_REPO: ${{ secrets.FASTLANE_CERT_REPO }}
         MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+        MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
+        MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
       working-directory: ./ios
       run: |
         fastlane beta

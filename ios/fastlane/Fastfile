@@ -18,7 +18,23 @@ default_platform(:ios)
 platform :ios do
   desc "Build development package"
   lane :beta do
-    match(type: "development", readonly: true, git_url: ENV["FASTLANE_CERT_REPO"], git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"])
+    create_keychain(
+      name: ENV["MATCH_KEYCHAIN_NAME"],
+      password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      add_to_search_list: true
+    )
+
+    match(
+      type: "development",
+      readonly: true,
+      git_url: ENV["FASTLANE_CERT_REPO"],
+      git_basic_authorization: ENV["MATCH_GIT_BASIC_AUTHORIZATION"],
+      keychain_name: ENV["MATCH_KEYCHAIN_NAME"],
+      keychain_password: ENV["MATCH_KEYCHAIN_PASSWORD"],
+    )
 
     settings_to_override = {
       :BUNDLE_IDENTIFIER => ENV["APP_BUNDLE_ID"],
@@ -32,6 +48,7 @@ platform :ios do
       scheme: "Runner", 
       workspace: "Runner.xcworkspace", 
       export_method: "development",
+      include_bitcode: false,
       xcargs: settings_to_override, 
       clean: true,
       export_options: {
