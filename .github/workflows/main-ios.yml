@@ -18,8 +18,8 @@ jobs:
         sudo xcode-select -switch /Applications/Xcode_11.3.app
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: 'v1.9.1+hotfix.6'
-    - name: flutter upgrade to current stable
+        flutter-version: '1.12.13+hotfix.7'
+    - name: flutter change to current stable
       run: |
         flutter channel stable
         flutter upgrade
