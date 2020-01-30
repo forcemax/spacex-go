@@ -18,19 +18,14 @@ jobs:
         sudo xcode-select -switch /Applications/Xcode_11.3.app
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.9.1+hotfix.6'
-        channel: 'stable'
-    - name: Upgrade flutter
-      run: |
-        flutter channel stable
-        flutter upgrade
-    - name: flutter doctor
+        flutter-version: 'v1.12.13+hotfix.7'
+    - name: flutter package get
       run: |
         flutter doctor -v
-    - name: flutter depencency package get
-      run: |
+        flutter clean
         flutter pub get
     - name: Build development package using fastlane
+      working-directory: ./ios
       env:
         APPLE_ID: ${{ secrets.APPLE_ID }}
         TEAM_ID: ${{ secrets.TEAM_ID }}
@@ -40,7 +35,6 @@ jobs:
         MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
         MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
         MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
-      working-directory: ./ios
       run: |
         pod install
         fastlane beta
