@@ -19,14 +19,11 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         flutter-version: '1.12.13+hotfix.7'
-    - name: flutter change to current stable
+    - name: flutter doctor
       run: |
-        flutter channel stable
-        flutter upgrade
         flutter doctor -v
     - name: flutter package get
       run: |
-        flutter clean
         flutter pub get
     - name: Build development package using fastlane
       working-directory: ./ios
