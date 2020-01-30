@@ -14,7 +14,12 @@ jobs:
         java-version: '1.8'
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: 'v1.12.13+hotfix.7'
+        flutter-version: 'v1.12.13+hotfix.5'
+    - name: flutter change to current stable
+      run: |
+        flutter channel stable
+        flutter upgrade
+        flutter doctor -v
     - name: flutter package get
       run: |
         flutter doctor -v
