@@ -22,22 +22,22 @@ cache:
   - "$HOME/.android/build-cache"
 
 before_script
-  - git clone https://github.com/flutter/flutter.git -b stable
-  - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
-  - flutter version v1.12.13+hotfix.7
+- git clone https://github.com/flutter/flutter.git -b stable
+- export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+- flutter version v1.12.13+hotfix.7
 
 script:
-  - flutter packages get
-  - echo "${SIGNING_KEY}" | base64 --decode > ${HOME}/keystore.jks
-  - echo "storeFile=${HOME}/keystore.jks" > android/key.properties
-  - echo "storePassword=${KEY_STORE_PASSWORD}" >> android/key.properties
-  - echo "keyAlias=${ALIAS}" >> android/key.properties
-  - echo "keyPassword=${KEY_PASSWORD}" >> android/key.properties  
-  - flutter build apk --release
-  - git clone https://github.com/apptestai/ci_addon
-  - export binary_path=build/app/outputs/apk/release/app-release.apk
-  - export project_id='1109'
-  - bash ./ci_addon/step.sh
+- flutter packages get
+- echo "${SIGNING_KEY}" | base64 --decode > ${HOME}/keystore.jks
+- echo "storeFile=${HOME}/keystore.jks" > android/key.properties
+- echo "storePassword=${KEY_STORE_PASSWORD}" >> android/key.properties
+- echo "keyAlias=${ALIAS}" >> android/key.properties
+- echo "keyPassword=${KEY_PASSWORD}" >> android/key.properties  
+- flutter build apk --release
+- git clone https://github.com/apptestai/ci_addon
+- export binary_path=build/app/outputs/apk/release/app-release.apk
+- export project_id='1109'
+- bash ./ci_addon/step.sh
 
 env:
   global:
