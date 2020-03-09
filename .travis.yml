@@ -1,6 +1,6 @@
 language: android
+os: linux
 jdk: oraclejdk8
-sudo: true
 android:
   components:
   - tools
@@ -11,17 +11,7 @@ android:
   - android-sdk-license-.+
   - google-gdk-license-.+
 
-before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
-cache:
-  directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
-  - "$HOME/.android/build-cache"
-
-before_script
+before_script:
 - git clone https://github.com/flutter/flutter.git -b stable
 - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
 - flutter version v1.12.13+hotfix.7
@@ -33,7 +23,7 @@ script:
 - echo "storeFile=${HOME}/keystore.jks" > android/key.properties
 - echo "storePassword=${KEY_STORE_PASSWORD}" >> android/key.properties
 - echo "keyAlias=${ALIAS}" >> android/key.properties
-- echo "keyPassword=${KEY_PASSWORD}" >> android/key.properties  
+- echo "keyPassword=${KEY_PASSWORD}" >> android/key.properties
 - flutter build apk --release
 - git clone https://github.com/apptestai/ci_addon
 - export binary_path=build/app/outputs/apk/release/app-release.apk
