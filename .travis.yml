@@ -10,7 +10,7 @@ jobs:
         - flutter version v1.12.13+hotfix.7
         - flutter packages get
       script:
-        - cd ios; pod install; fastlane beta
+        - cd ios; pod install; fastlane beta; cd ..
         - git clone https://github.com/apptestai/ci_addon
         - export binary_path="ios/Runner.ipa"
         - export project_id='1108'
@@ -20,7 +20,6 @@ jobs:
       os: linux
       language: android
       jdk: oraclejdk8
-      sudo: required
       android:
         components:
           - tools
