@@ -12,7 +12,7 @@ jobs:
       vmImage: 'ubuntu-latest'
     steps:
     - bash: |
-        curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.12.13+hotfix.7-stable.tar.xz
+        curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.1-stable.tar.xz
         tar xvf flutter.tar.xz
       displayName: install flutter
     - bash: |
@@ -47,8 +47,6 @@ jobs:
     - task: FlutterInstall@0
       inputs:
         channel: 'stable'
-        version: 'custom'
-        customVersion: '1.12.13+hotfix.7'
     - bash: |
         $(FlutterToolPath)/flutter pub get
       displayName: flutter package get
