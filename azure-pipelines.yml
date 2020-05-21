@@ -14,9 +14,11 @@ jobs:
     - bash: |
         curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.1-stable.tar.xz
         tar xvf flutter.tar.xz
+        CURPWD=$(pwd)
+        export PATH="$PATH:${CURPWD}/flutter/bin"
       displayName: install flutter
     - bash: |
-        flutter/bin/flutter pub get
+        flutter pub get
       displayName: flutter package get
     - bash: |
         FLUTTER_BIN_PATH=$(which flutter)
@@ -40,7 +42,7 @@ jobs:
         ALIAS: $(ALIAS)
         KEY_PASSWORD: $(KEY_PASSWORD)
     - bash: |
-        flutter/bin/flutter build apk --release
+        flutter build apk --release
       displayName: build
     - task: apptestai-test@0
       inputs:
