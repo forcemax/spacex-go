@@ -15,6 +15,21 @@ jobs:
           name: flutter doctor
           command: flutter doctor -v
       - run:
+          name: flutter shared_preferences bugfix
+          command: |
+            FLUTTER_BIN_PATH=$(which flutter)
+            FLUTTER_PATH=${FLUTTER_BIN_PATH%"/bin/flutter"}
+            SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties
+            if [ -f $SOURCE ]; then
+              sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+              mv ${SOURCE}.fix $SOURCE
+            fi
+            SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties
+            if [ -f $SOURCE ]; then
+              sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+              mv ${SOURCE}.fix $SOURCE
+            fi
+      - run:
           name: create keystore file, fill key
           command: |
             CURPWD=$(pwd)
@@ -49,7 +64,7 @@ jobs:
             - flutter-cache
       - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_v1.12.13+hotfix.9-stable.zip; fi
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.17.1-stable.zip; fi
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip

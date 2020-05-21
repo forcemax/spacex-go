@@ -14,13 +14,27 @@ jobs:
         java-version: '1.8'
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.12.13+hotfix.7'
+        flutter-version: '1.17.1'
     - name: flutter doctor
       run: |
         flutter doctor -v
     - name: flutter package get
       run: |
         flutter pub get
+    - name: flutter shared_preferences bugfix
+      run: |
+        FLUTTER_BIN_PATH=$(which flutter)  
+        FLUTTER_PATH=${FLUTTER_BIN_PATH%"/bin/flutter"}
+        SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties
+        if [ -f $SOURCE ]; then
+          sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix 
+          mv ${SOURCE}.fix $SOURCE
+        fi
+        SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties
+        if [ -f $SOURCE ]; then
+          sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix 
+          mv ${SOURCE}.fix $SOURCE
+        fi
     - name: Fill keystore key
       run: |
         CURPWD=$(pwd)

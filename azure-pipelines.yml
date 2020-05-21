@@ -12,12 +12,26 @@ jobs:
       vmImage: 'ubuntu-latest'
     steps:
     - bash: |
-        curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_v1.12.13+hotfix.7-stable.tar.xz
+        curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.1-stable.tar.xz
         tar xvf flutter.tar.xz
       displayName: install flutter
     - bash: |
         flutter/bin/flutter pub get
       displayName: flutter package get
+    - bash: |
+        CURPWD=$(pwd)
+        FLUTTER_PATH="${CURPWD}/flutter"
+        SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties
+        if [ -f $SOURCE ]; then 
+          sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+          mv ${SOURCE}.fix $SOURCE
+        fi
+        SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties
+        if [ -f $SOURCE ]; then 
+          sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+          mv ${SOURCE}.fix $SOURCE
+        fi
+      displayName: flutter shared_preferences bugfix
     - bash: |
         CURPWD=$(pwd)
         echo "${SIGNING_KEY}" | base64 --decode > keystore.jks
@@ -47,8 +61,6 @@ jobs:
     - task: FlutterInstall@0
       inputs:
         channel: 'stable'
-        version: 'custom'
-        customVersion: '1.12.13+hotfix.7'
     - bash: |
         $(FlutterToolPath)/flutter pub get
       displayName: flutter package get
