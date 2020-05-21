@@ -14,13 +14,13 @@ jobs:
     - bash: |
         curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_1.17.1-stable.tar.xz
         tar xvf flutter.tar.xz
-        CURPWD=$(pwd)
-        export PATH="$PATH:${CURPWD}/flutter/bin"
       displayName: install flutter
     - bash: |
-        flutter pub get
+        flutter/bin/flutter pub get
       displayName: flutter package get
     - bash: |
+        CURPWD=$(pwd)
+        export PATH="$PATH:${CURPWD}/flutter/bin"
         FLUTTER_BIN_PATH=$(which flutter)
         FLUTTER_PATH=${FLUTTER_BIN_PATH%"/bin/flutter"}
         sed 's/5.1.1/5.4.1/g' $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties > $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties.fix
@@ -42,7 +42,7 @@ jobs:
         ALIAS: $(ALIAS)
         KEY_PASSWORD: $(KEY_PASSWORD)
     - bash: |
-        flutter build apk --release
+        flutter/bin/flutter build apk --release
       displayName: build
     - task: apptestai-test@0
       inputs:
