@@ -19,10 +19,16 @@ jobs:
           command: |
             FLUTTER_BIN_PATH=$(which flutter)
             FLUTTER_PATH=${FLUTTER_BIN_PATH%"/bin/flutter"}
-            sed 's/5.1.1/5.4.1/g' $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties > $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties.fix
-            mv $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties.fix $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties
-            sed 's/5.1.1/5.4.1/g' $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties > $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties.fix
-            mv $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties.fix $FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties
+            SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_macos-0.0.1+8/android/gradle/wrapper/gradle-wrapper.properties
+            if [ -f $SOURCE ]; then
+              sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+              mv ${SOURCE}.fix $SOURCE
+            fi
+            SOURCE=$FLUTTER_PATH/.pub-cache/hosted/pub.dartlang.org/shared_preferences_web-0.1.2+5/android/gradle/wrapper/gradle-wrapper.properties
+            if [ -f $SOURCE ]; then
+              sed 's/5.1.1/5.4.1/g' $SOURCE > ${SOURCE}.fix
+              mv ${SOURCE}.fix $SOURCE
+            fi
       - run:
           name: create keystore file, fill key
           command: |
