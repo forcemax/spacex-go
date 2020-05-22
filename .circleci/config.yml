@@ -18,6 +18,8 @@ jobs:
           name: flutter package get
           command: |
             flutter pub get
+            flutter clean
+            flutter upgrade
       - run:
           name: flutter shared_preferences bugfix
           command: |
@@ -79,23 +81,6 @@ jobs:
           name: flutter clean
           command: |
             flutter pub get
-            flutter clean
-      - run:
-          name: pod deintegrate
-          working_directory: ./ios
-          command: |
-            pod deintegrate
-            pod install
-      - run:
-          name: flutter package get
-          command: |
-            flutter build ios || true
-            flutter pub get
-      - run:
-          name: pod install
-          working_directory: ./ios
-          command: |
-            pod install
       - run:
           name: build
           working_directory: ./ios
