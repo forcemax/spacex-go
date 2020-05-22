@@ -12,6 +12,12 @@ jobs:
     steps:
       - checkout
       - run:
+          name: android sdk
+          command: |
+            yes | sdkmanager --licenses || true
+            yes | sdkmanager --update || true
+            sdkmanager "build-tools;28.0.2" || true
+      - run:
           name: flutter doctor
           command: flutter doctor -v
       - run:
