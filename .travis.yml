@@ -9,12 +9,9 @@ jobs:
         - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
         - flutter doctor -v
         - flutter pub get
-        - flutter channel stable
         - flutter clean
-        - flutter upgrade
-        - cd ios; pod deintegrate; cd ..
+        - cd ios; pod deintegrate; pod install; cd ..
         - flutter pub get
-        - cd ios; pod install; cd ..
       script:
         - cd ios; fastlane beta; cd ..
         - git clone https://github.com/apptestai/ci_addon
