@@ -10,8 +10,9 @@ jobs:
         - flutter doctor -v
         - flutter pub get
         - flutter clean
-        - cd ios; pod deintegrate; pod install; pod install; cd ..
+        - cd ios; pod deintegrate; pod install; cd ..
         - flutter pub get
+        - cd ios; pod install; cd ..
       script:
         - cd ios; fastlane beta; cd ..
         - git clone https://github.com/apptestai/ci_addon
