@@ -18,6 +18,15 @@ jobs:
           name: flutter package get
           command: flutter pub get
       - run:
+          name: flutter channel stable
+          command: flutter channel stable
+      - run:
+          name: flutter clean
+          command: flutter clean
+      - run:
+          name: flutter upgrade
+          command: flutter upgrade
+      - run:
           name: flutter shared_preferences bugfix
           command: |
             FLUTTER_BIN_PATH=$(which flutter)
