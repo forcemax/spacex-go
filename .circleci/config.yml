@@ -18,6 +18,9 @@ jobs:
           name: flutter package get
           command: flutter pub get
       - run:
+          name: flutter channel stable
+          command: flutter channel stable
+      - run:
           name: flutter clean
           command: flutter clean
       - run:
