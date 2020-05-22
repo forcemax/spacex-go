@@ -11,6 +11,7 @@ jobs:
         - flutter pub get
         - flutter clean
         - cd ios; pod deintegrate; pod install; cd ..
+        - flutter build ios
         - flutter pub get
         - cd ios; pod install; cd ..
       script:
