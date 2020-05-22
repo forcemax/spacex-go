@@ -16,9 +16,7 @@ jobs:
           command: flutter doctor -v
       - run:
           name: flutter package get
-          command: |
-            flutter clean
-            flutter pub get
+          command: flutter pub get
       - run:
           name: flutter shared_preferences bugfix
           command: |
