@@ -12,20 +12,21 @@ jobs:
     steps:
       - checkout
       - run:
+          name: android sdk
+          command: |
+            yes | sdkmanager --licenses || true
+            yes | sdkmanager --update || true
+            sdkmanager "build-tools;28.0.2" || true
+      - run:
           name: flutter doctor
           command: flutter doctor -v
       - run:
           name: flutter package get
-          command: flutter pub get
-      - run:
-          name: flutter channel stable
-          command: flutter channel stable
-      - run:
-          name: flutter clean
-          command: flutter clean
-      - run:
-          name: flutter upgrade
-          command: flutter upgrade
+          command: |
+            flutter channel stable
+            flutter upgrade
+            flutter pub get
+            flutter clean
       - run:
           name: flutter shared_preferences bugfix
           command: |
@@ -71,12 +72,9 @@ jobs:
       xcode: 11.3.1
     steps:
       - checkout
-      - restore_cache:
-          keys: 
-            - flutter-cache
       - run:
           name: download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.17.1-stable.zip; fi
+          command: curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.17.1-stable.zip
       - run:
           name: unzip flutter SDK
           command: unzip flutter_sdk.zip
@@ -87,18 +85,15 @@ jobs:
           name: flutter doctor
           command: flutter doctor -v
       - run:
-          name: flutter package get
-          command: flutter pub get
+          name: flutter clean
+          command: |
+            flutter pub get
       - run:
           name: build
           working_directory: ./ios
           command: |
             pod install
             fastlane beta
-      - save_cache:
-          key: flutter-cache
-          paths:
-            - flutter_sdk.zip
       - apptest-ai/run-test:
           binary_path: "ios/Runner.ipa"
           project_id: "1108"
@@ -106,8 +101,6 @@ jobs:
           path: test-results
       - store_test_results:
           path: test-results
-
-
 
 workflows:
     build:
