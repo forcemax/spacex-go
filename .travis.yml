@@ -12,7 +12,9 @@ jobs:
         - flutter channel stable
         - flutter clean
         - flutter upgrade
-        - cd ios; pod deintegrate; pod install; cd ..
+        - cd ios; pod deintegrate; cd ..
+        - flutter pub get
+        - cd ios; pod install; cd ..
       script:
         - cd ios; fastlane beta; cd ..
         - git clone https://github.com/apptestai/ci_addon
